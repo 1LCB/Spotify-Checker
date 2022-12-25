@@ -1,4 +1,4 @@
-import threading, time, datetime
+import threading, time, datetime, os
 
 import selenium.webdriver as webdriver
 from selenium.webdriver.common.by import By
@@ -28,6 +28,9 @@ options.add_argument('--log-level=OFF')
 url = 'https://accounts.spotify.com/pt-BR/login'  # 'pt-BR' = brazilian link ⚽
 
 # <==== Configs ====>
+
+if not os.path.exists('results'):
+    os.mkdir('results')
 
 with open(COMBO_PATH, 'r') as file:
     accounts = file.read().split('\n')
