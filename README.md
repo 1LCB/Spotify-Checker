@@ -7,5 +7,4 @@ pip install selenium
 pip install colorama
 ```
 
-
-<img src='spotify checker.png'>
+<img src='img/spotify checker.png'>
