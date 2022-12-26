@@ -5,6 +5,8 @@ A simple Spotify account checker that works using selenium
 ```
 pip install selenium
 pip install colorama
+
+*GOOGLE CHROME INSTALLED*
 ```
 <img src='img/console.png'>
 <img src='img/spotify checker.png'>
